@@ -55,6 +55,7 @@
           </div>
 
           <div
+            v-if="$slots.actions || cancelText || submitText"
             ref="actions"
             class="actions"
           >

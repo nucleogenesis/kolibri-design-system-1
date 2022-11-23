@@ -2,7 +2,7 @@
 
   <component :is="tag" class="ui-focus-container">
     <span
-      v-if="renderRedirector"
+      v-show="renderRedirector"
       class="ui-focus-container-focus-redirector"
 
       tabindex="0"
@@ -15,7 +15,7 @@
     </div>
 
     <span
-      v-if="!disabled && containFocus"
+      v-show="!disabled && containFocus"
       ref="lastFocusable"
       class="ui-focus-container-last-focusable"
 
@@ -23,7 +23,7 @@
     ></span>
 
     <span
-      v-if="renderRedirector"
+      v-show="renderRedirector"
       class="ui-focus-container-focus-redirector"
 
       tabindex="0"

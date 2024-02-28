@@ -18,11 +18,11 @@
           :id="getTabElementId(tabsId, tab.id)"
           ref="tab"
           role="tab"
+          tabindex="0"
           :data-activeroute="isActive"
           :data-tabid="tab.id"
           :href="href"
           :class="classes(tab.id)"
-          :tabindex="tabIndexAttr(tab.id)"
           :aria-selected="ariaSelectedAttr(tab.id)"
           :aria-controls="ariaControlsAttr(tab.id)"
           @click="event => onClick(tab.id, navigate, event)"
@@ -47,8 +47,8 @@
         ref="tab"
         type="button"
         role="tab"
+        tabindex="0"
         :class="classes(tab.id)"
-        :tabindex="tabIndexAttr(tab.id)"
         :aria-selected="ariaSelectedAttr(tab.id)"
         :aria-controls="ariaControlsAttr(tab.id)"
         @click="onClick(tab.id)"
@@ -191,9 +191,6 @@
           this.isTabActive(tabId) ? 'active' : '',
           this.isTabActive(tabId) ? this.computedClassActive : this.computedClass,
         ];
-      },
-      tabIndexAttr(tabId) {
-        return this.isTabActive(tabId) ? '0' : '-1';
       },
       ariaSelectedAttr(tabId) {
         return this.isTabActive(tabId) ? 'true' : 'false';

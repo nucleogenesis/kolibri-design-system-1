@@ -47,7 +47,7 @@
               role="columnheader"
               data-focus="true"
               :aria-colindex="index + 1"
-              @click="sortable ? handleSort(index) : null"
+              @click="header?.sortable ? handleSort(index) : null"
               @keydown="handleKeydown($event, -1, index)"
             >
               <!--@slot Scoped slot for customizing the content of each header cell.
@@ -222,7 +222,7 @@
     props: {
       /**
        * An array of objects:
-       * `{ label, dataType, minWidth, width, columnId }`
+       * `{ label, dataType, minWidth, width, columnId, sortable }`
        * representing the headers of the table.
        * The `dataType` can be one of `'string'`, `'number'`, `'date'`, or `'undefined'`.
        * `label` and `dataType` are required. `minWidth` and `width` are optional.
@@ -259,13 +259,6 @@
       caption: {
         type: String,
         required: true,
-      },
-      /**
-       * Enables or disables sorting functionality for the table headers.
-       */
-      sortable: {
-        type: Boolean,
-        default: false,
       },
       /**
        * The message to display when the table is empty.
@@ -324,6 +317,9 @@
       };
     },
     computed: {
+      sortable() {
+        return this.headers.some(h => h?.sortable)
+      },
       coreOutlineFocus() {
         return {
           ':focus': {
@@ -364,7 +360,8 @@
         return colIndex => this.focusedColIndex === colIndex;
       },
       isColumnSortable() {
-        return colIndex => this.sortable && this.headers[colIndex].dataType !== DATA_TYPE_OTHERS;
+        return colIndex =>
+          this.headers[colIndex]?.sortable && this.headers[colIndex].dataType !== DATA_TYPE_OTHERS;
       },
     },
     watch: {
@@ -455,7 +452,7 @@
         event.preventDefault();
       },
       handleEnterKey(rowIndex, colIndex) {
-        if (rowIndex === -1 && this.sortable) {
+        if (rowIndex === -1 && this.headers[colIndex]?.sortable) {
           this.handleSort(colIndex);
         }
       },
